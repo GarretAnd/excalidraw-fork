@@ -29,6 +29,7 @@ export {
   actionZoomOut,
   actionResetZoom,
   actionZoomToFit,
+  actionZoomToSelection,
   actionToggleTheme,
 } from "./actionCanvas";
 
