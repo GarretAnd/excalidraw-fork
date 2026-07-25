@@ -2559,3 +2559,16 @@ export const settingsIcon = createIcon(
   </g>,
   tablerIconProps,
 );
+
+// tabler-icons: ruler
+export const RulerIcon = createIcon(
+  <g strokeWidth="1.25">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M5 5h14v4H5z" />
+    <path d="M7 9v2" />
+    <path d="M10 9v3" />
+    <path d="M13 9v2" />
+    <path d="M16 9v3" />
+  </g>,
+  tablerIconProps,
+);

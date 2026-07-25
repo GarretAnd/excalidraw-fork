@@ -28,6 +28,7 @@ import {
   ZoomInIcon,
   ZoomOutIcon,
   ZoomResetIcon,
+  RulerIcon,
 } from "../components/icons";
 import { useAppStateValue } from "../hooks/useAppStateValue";
 
@@ -413,6 +414,33 @@ export const actionZoomToFit = register({
     event.shiftKey &&
     !event.altKey &&
     !event[KEYS.CTRL_OR_CMD],
+});
+
+export const actionToggleRulerMode = register({
+  name: "ruler",
+  label: "labels.rulerMode",
+  icon: RulerIcon,
+  viewMode: true,
+  trackEvent: { category: "canvas" },
+  keywords: ["ruler", "measure", "guide"],
+  perform(elements, appState) {
+    return {
+      appState: {
+        ...appState,
+        rulerModeEnabled: !this.checked!(appState),
+      },
+      captureUpdate: CaptureUpdateAction.EVENTUALLY,
+    };
+  },
+  checked: (appState) => appState.rulerModeEnabled,
+  predicate: (elements, appState, props) => {
+    return props.rulerModeEnabled === undefined;
+  },
+  keyTest: (event) =>
+    !event[KEYS.CTRL_OR_CMD] &&
+    !event.altKey &&
+    event.shiftKey &&
+    event.code === CODES.R,
 });
 
 export const actionToggleTheme = register<AppState["theme"]>({

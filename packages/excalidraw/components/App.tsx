@@ -802,6 +802,7 @@ class App extends React.Component<AppProps, AppState> {
     const {
       viewModeEnabled = false,
       zenModeEnabled = false,
+      rulerModeEnabled = false,
       gridModeEnabled = false,
       objectsSnapModeEnabled = false,
       theme = defaultAppState.theme,
@@ -836,6 +837,7 @@ class App extends React.Component<AppProps, AppState> {
         : true,
       activeTool: forcedActiveTool ?? defaultAppState.activeTool,
       zenModeEnabled,
+      rulerModeEnabled: rulerModeEnabled ?? defaultAppState.rulerModeEnabled,
       objectsSnapModeEnabled,
       gridModeEnabled: gridModeEnabled ?? defaultAppState.gridModeEnabled,
       name,
@@ -3023,6 +3025,8 @@ class App extends React.Component<AppProps, AppState> {
     if (actionResult.appState || editingTextElement || this.state.contextMenu) {
       let viewModeEnabled = actionResult?.appState?.viewModeEnabled || false;
       let zenModeEnabled = actionResult?.appState?.zenModeEnabled || false;
+      let rulerModeEnabled =
+        actionResult?.appState?.rulerModeEnabled ?? this.state.rulerModeEnabled;
       const theme =
         actionResult?.appState?.theme || this.props.theme || THEME.LIGHT;
       const name = actionResult?.appState?.name ?? this.state.name;
@@ -3040,6 +3044,10 @@ class App extends React.Component<AppProps, AppState> {
 
       if (typeof this.props.zenModeEnabled !== "undefined") {
         zenModeEnabled = this.props.zenModeEnabled;
+      }
+
+      if (typeof this.props.rulerModeEnabled !== "undefined") {
+        rulerModeEnabled = this.props.rulerModeEnabled;
       }
 
       editingTextElement = actionResult.appState?.editingTextElement || null;
@@ -3071,6 +3079,7 @@ class App extends React.Component<AppProps, AppState> {
           editingTextElement,
           viewModeEnabled,
           zenModeEnabled,
+          rulerModeEnabled,
           theme,
           name,
           errorMessage,

@@ -54,6 +54,17 @@ const GridLineColor = {
   },
 } as const;
 
+const RulerColor = {
+  [THEME.LIGHT]: {
+    bg: "rgba(255, 255, 255, 0.85)",
+    stroke: "#333333",
+  },
+  [THEME.DARK]: {
+    bg: "rgba(30, 30, 30, 0.85)",
+    stroke: applyDarkModeFilter("#cccccc"),
+  },
+} as const;
+
 const strokeGrid = (
   context: CanvasRenderingContext2D,
   /** grid cell pixel size */
@@ -127,6 +138,64 @@ const strokeGrid = (
     context.lineTo(Math.ceil(offsetX + width + gridSize * 2), y);
     context.stroke();
   }
+  context.restore();
+};
+
+const strokeRuler = (
+  context: CanvasRenderingContext2D,
+  scale: number,
+  width: number,
+  height: number,
+  theme: StaticCanvasRenderConfig["theme"],
+) => {
+  const rulerSize = 24;
+  const colors = RulerColor[theme];
+
+  context.save();
+  context.setTransform(scale, 0, 0, scale, 0, 0);
+
+  // Background bars
+  context.fillStyle = colors.bg;
+  context.fillRect(0, 0, width, rulerSize);
+  context.fillRect(0, 0, rulerSize, height);
+
+  // Tick marks
+  context.strokeStyle = colors.stroke;
+  context.lineWidth = 1;
+  context.beginPath();
+
+  for (let x = 0; x < width; x += 10) {
+    const tickHeight =
+      x % 50 === 0
+        ? rulerSize
+        : x % 25 === 0
+        ? rulerSize * 0.6
+        : rulerSize * 0.35;
+    context.moveTo(x + 0.5, rulerSize);
+    context.lineTo(x + 0.5, rulerSize - tickHeight);
+  }
+
+  for (let y = 0; y < height; y += 10) {
+    const tickWidth =
+      y % 50 === 0
+        ? rulerSize
+        : y % 25 === 0
+        ? rulerSize * 0.6
+        : rulerSize * 0.35;
+    context.moveTo(rulerSize, y + 0.5);
+    context.lineTo(rulerSize - tickWidth, y + 0.5);
+  }
+
+  context.stroke();
+
+  // Border lines
+  context.beginPath();
+  context.moveTo(rulerSize + 0.5, 0);
+  context.lineTo(rulerSize + 0.5, height);
+  context.moveTo(0, rulerSize + 0.5);
+  context.lineTo(width, rulerSize + 0.5);
+  context.stroke();
+
   context.restore();
 };
 
@@ -483,6 +552,17 @@ const _renderStaticScene = ({
       console.error(error);
     }
   });
+
+  // Ruler overlay (viewport UI, not exported) - drawn last so it stays on top
+  if (appState.rulerModeEnabled && !isExporting) {
+    strokeRuler(
+      context,
+      scale,
+      normalizedWidth,
+      normalizedHeight,
+      renderConfig.theme,
+    );
+  }
 };
 
 /** throttled to animation framerate */
