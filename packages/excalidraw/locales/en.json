@@ -236,6 +236,7 @@
     "zoomIn": "Zoom in",
     "zoomOut": "Zoom out",
     "resetZoom": "Reset zoom",
+    "zoomToSelection": "Zoom to selection",
     "menu": "Menu",
     "done": "Done",
     "edit": "Edit",

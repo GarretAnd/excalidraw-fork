@@ -415,6 +415,51 @@ export const actionZoomToFit = register({
     !event[KEYS.CTRL_OR_CMD],
 });
 
+// zooms to the selection only (unlike actionZoomToFitSelection, which falls
+// back to fitting all elements when nothing is selected)
+export const actionZoomToSelection = register({
+  name: "zoomToSelection",
+  label: "buttons.zoomToSelection",
+  icon: zoomAreaIcon,
+  viewMode: true,
+  navigation: true,
+  trackEvent: { category: "canvas", action: "zoomToSelection" },
+  predicate: (elements, appState, appProps, app) =>
+    app.isNavigationEnabled() &&
+    app.scene.getSelectedElements(appState).length > 0,
+  perform: (elements, appState, _, app) => {
+    const selectedElements = getNonDeletedElements(
+      app.scene.getSelectedElements(appState),
+    );
+    if (!selectedElements.length) {
+      return false;
+    }
+    const result = zoomToFitBounds({
+      bounds: getCommonBounds(selectedElements),
+      appState: {
+        ...appState,
+        userToFollow: null,
+      },
+      fit: "contain",
+      canvasOffsets: app.viewport.getOffsets(),
+    });
+    return {
+      ...result,
+      // re-clamp so the fit can't escape an active scroll/zoom lock
+      appState: {
+        ...result.appState,
+        ...constrainScrollState(result.appState),
+      },
+      captureUpdate: CaptureUpdateAction.EVENTUALLY,
+    };
+  },
+  keyTest: (event) =>
+    event.code === CODES.FOUR &&
+    event.shiftKey &&
+    !event.altKey &&
+    !event[KEYS.CTRL_OR_CMD],
+});
+
 export const actionToggleTheme = register<AppState["theme"]>({
   name: "toggleTheme",
   label: (_, appState) => {

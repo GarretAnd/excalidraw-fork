@@ -330,6 +330,7 @@ function CommandPaletteInner({
         actionManager.actions.flipVertical,
         actionManager.actions.zoomToFitSelection,
         actionManager.actions.zoomToFitSelectionInViewport,
+        actionManager.actions.zoomToSelection,
         actionManager.actions.increaseFontSize,
         actionManager.actions.decreaseFontSize,
         actionManager.actions.toggleLinearEditor,
