@@ -86,6 +86,7 @@ const ExcalidrawBase = (props: ExcalidrawProps) => {
     ui,
     activeTool,
     zenModeEnabled,
+    rulerModeEnabled,
     gridModeEnabled,
     libraryReturnUrl,
     theme,
@@ -222,6 +223,7 @@ const ExcalidrawBase = (props: ExcalidrawProps) => {
           ui={ui}
           activeTool={activeTool}
           zenModeEnabled={zenModeEnabled}
+          rulerModeEnabled={rulerModeEnabled}
           gridModeEnabled={gridModeEnabled}
           libraryReturnUrl={libraryReturnUrl}
           theme={theme}

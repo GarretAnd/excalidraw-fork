@@ -44,6 +44,7 @@ export type ShortcutName =
       | "zoomToFit"
       | "zoomToFitSelectionInViewport"
       | "zoomToFitSelection"
+      | "ruler"
       | "saveFileToDisk"
       | "saveToActiveFile"
       | "toggleShortcuts"
@@ -107,6 +108,7 @@ const shortcutMap: Record<ShortcutName, string[]> = {
   zoomToFitSelection: [getShortcutKey("Shift+3")],
   zoomToFit: [getShortcutKey("Shift+1")],
   zoomToFitSelectionInViewport: [getShortcutKey("Shift+2")],
+  ruler: [getShortcutKey("Shift+R")],
   saveFileToDisk: [getShortcutKey("CtrlOrCmd+S")],
   saveToActiveFile: [getShortcutKey("CtrlOrCmd+S")],
   toggleShortcuts: [getShortcutKey("?")],

@@ -30,6 +30,7 @@ export {
   actionResetZoom,
   actionZoomToFit,
   actionToggleTheme,
+  actionToggleRulerMode,
 } from "./actionCanvas";
 
 export { actionFinalize } from "./actionFinalize";

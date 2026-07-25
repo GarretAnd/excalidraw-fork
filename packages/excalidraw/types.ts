@@ -207,6 +207,7 @@ export type StaticCanvasAppState = Readonly<
     selectedElementsAreBeingDragged: AppState["selectedElementsAreBeingDragged"];
     gridSize: AppState["gridSize"];
     gridStep: AppState["gridStep"];
+    rulerModeEnabled: AppState["rulerModeEnabled"];
     frameRendering: AppState["frameRendering"];
     currentHoveredFontFamily: AppState["currentHoveredFontFamily"];
     hoveredElementIds: AppState["hoveredElementIds"];
@@ -470,6 +471,7 @@ export interface AppState {
     duration?: number;
   } | null;
   zenModeEnabled: boolean;
+  rulerModeEnabled: boolean;
   theme: Theme;
   /** grid cell px size */
   gridSize: number;
@@ -871,6 +873,7 @@ export interface ExcalidrawProps {
     | { type: Exclude<ToolType, "image"> }
     | { type: "custom"; customType: string };
   zenModeEnabled?: boolean;
+  rulerModeEnabled?: boolean;
   gridModeEnabled?: boolean;
   objectsSnapModeEnabled?: boolean;
   libraryReturnUrl?: string;
